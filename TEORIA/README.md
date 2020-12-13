@@ -26,10 +26,10 @@ Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar event
 
 	void glfwGetWindowSize(GLFWwindow* window, int* width, int* height); // Devuelve el tamaño de la ventana
 	void glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);  	             // Añade propiedades a la ventana.
-	 // GLFW_RESIZABLE: escalado de la ventana
-	// GLFW_FOCUSED: fija ventana delante del
-	//  resto y no permite sacar ratón
-	 // GLFW_DECORATED: quita el marco de la ventana
+									     // GLFW_RESIZABLE: escalado de la ventana
+									     // GLFW_FOCUSED: fija ventana delante del
+									     //  resto y no permite sacar ratón
+	 								     // GLFW_DECORATED: quita el marco de la ventana
 ```
 ### Bucle de renderizado
 
@@ -89,9 +89,9 @@ Para solucionar esto, especificamos los movimientos en unidades por segundo. La 
 	float velocidad = 120; 							   
 	// En el Bucle de renderizado
 	float newTime = static_cast<float>(glfwGetTime()); // Instante de tiempo actual
-	float deltaTime = newTime - lastTime; // Calcula el tiempo desde el último frame
-	float d = velocidad * deltaTime; // Calcula distancia del movimiento
-	float lasTime = newTime; // Actuliza el tiempo del último frame
+	float deltaTime = newTime - lastTime; 		   // Calcula el tiempo desde el último frame
+	float d = velocidad * deltaTime; 		   // Calcula distancia del movimiento
+	float lasTime = newTime; 		 	   // Actuliza el tiempo del último frame
 
 ## OpenGL
 
@@ -114,9 +114,9 @@ Para activar/desactivar estados del cauce: `glEnable/glDisable`
 
 Para definir la geometría de los objetos vamos a utilizar buffers (un array), concretamente el Vertex Buffer Objects (VBO). Las funciones para manejar VBO:
 
-	void glGenBuffers(GLsizei n, Gluint* buffers) // Reserva memoria en la tarjeta gráfica
+	void glGenBuffers(GLsizei n, Gluint* buffers) 			// Reserva memoria en la tarjeta gráfica
 	void glDeleteBuffers(GLsizei n, const Gluint* buffers)		// Libera memoria en la tarjeta gráfica
-	void glBindBuffer(GLenum target, Gluint buffer)	// Enlaza un buffer previamente generado con su tipo
+	void glBindBuffer(GLenum target, Gluint buffer)			// Enlaza un buffer previamente generado con su tipo
 - `target`. Tipos de buffer:
 	- `GL_ARRAY_BUFFER`. Contiene información de vértices (coordenaas, color, normales,...)
 	- `GL_ELEMENT_ARRAY_BUFFER`. Índices de los vértices con los que se forma la geometría de los objetos.
