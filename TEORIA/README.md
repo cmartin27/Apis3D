@@ -5,7 +5,7 @@ Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar event
 
 ### Inicialización
 
-	int glfwInit(); // Inicializa la libreria, devuelve GLFW_TRUE O GLWF_FALSE
+	int glfwInit();       // Inicializa la libreria, devuelve GLFW_TRUE O GLWF_FALSE
 	void glfwTerminate(); // Antes de salir, desaloja recursos de GLFW
 
 ### Manejo de Ventana
@@ -20,12 +20,12 @@ Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar event
 - share: valor siempre `nullptr`
 
 ```
-	void glfwMakeContextCurrent(GLFWwindow* window); // Pone una ventana como principal, la  
-	// que OpenGL utiliza para renderizar
+	void glfwMakeContextCurrent(GLFWwindow* window); // Pone una ventana como principal, la 	
+						         // que OpenGL utiliza para renderizar
 	void glfwSetWindowTitle(GLFWwindow* window, const char* title); // Cambia el titulo de una ventana
 
 	void glfwGetWindowSize(GLFWwindow* window, int* width, int* height); // Devuelve el tamaño de la ventana
-	void glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);  // Añade propiedades a la ventana.
+	void glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);  	             // Añade propiedades a la ventana.
 	 // GLFW_RESIZABLE: escalado de la ventana
 	// GLFW_FOCUSED: fija ventana delante del
 	//  resto y no permite sacar ratón
