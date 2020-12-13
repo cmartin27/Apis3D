@@ -1,16 +1,14 @@
 # Tema 2: GLFW y OpenGL
 ## GLFW
 
-Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar eventos,...
+Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar eventos,..
 
-### Comandos de GLFW
+### Inicialización
 
-#### Inicialización
-
-	int glfwInit(); 	  // Inicializa la libreria, devuelve GLFW_TRUE O GLWF_FALSE
+	int glfwInit(); // Inicializa la libreria, devuelve GLFW_TRUE O GLWF_FALSE
 	void glfwTerminate(); // Antes de salir, desaloja recursos de GLFW
 
-#### Manejo de Ventana
+### Manejo de Ventana
 
 	GLFWwindow* glfwCreateWindow(int width, int height, const char* title,  // Crea una ventana
 		GLFWmonitor* monitor, GLFWwindow* share); 
@@ -22,18 +20,18 @@ Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar event
 - share: valor siempre `nullptr`
 
 ```
-	void glfwMakeContextCurrent(GLFWwindow* window);    				 // Pone una ventana como principal, la  
-																		 // que OpenGL utiliza para renderizar
-	void glfwSetWindowTitle(GLFWwindow* window, const char* title); 	 // Cambia el titulo de una ventana
+	void glfwMakeContextCurrent(GLFWwindow* window); // Pone una ventana como principal, la  
+	// que OpenGL utiliza para renderizar
+	void glfwSetWindowTitle(GLFWwindow* window, const char* title); // Cambia el titulo de una ventana
 
 	void glfwGetWindowSize(GLFWwindow* window, int* width, int* height); // Devuelve el tamaño de la ventana
-	void glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);					 // Añade propiedades a la ventana.
-																		 // GLFW_RESIZABLE: escalado de la ventana
-																		 // GLFW_FOCUSED: fija ventana delante del
-																		 //  resto y no permite sacar ratón
-																		 // GLFW_DECORATED: quita el marco de la ventana
+	void glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);  // Añade propiedades a la ventana.
+	 // GLFW_RESIZABLE: escalado de la ventana
+	// GLFW_FOCUSED: fija ventana delante del
+	//  resto y no permite sacar ratón
+	 // GLFW_DECORATED: quita el marco de la ventana
 ```
-#### Bucle de renderizado
+### Bucle de renderizado
 
 	// Bucle infinito mientras no se cierre la ventana
 	while(!glfwWindowShouldClose(window))
@@ -42,7 +40,7 @@ Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar event
 		glfwSwapBuffer(GLFWwindow* window); // Muestra por pantalla lo que hemos dibujado
 	}
 
-#### Entrada de datos
+### Entrada de datos
 
 - Callbacks. Escucha los eventos que están ocurriendo y ejecuta. Se ejecutan en un hilo paralelo. Almaceno todos los eventos que hayan ocurrido y actuó según la información recogida.
 	- Teclas
@@ -82,7 +80,7 @@ Librería complementraria a OpenGL que nos ayuda a crear ventanas, manejar event
 		- 	`void glfwSetCuyrsorPos(GLFWwindow* window, double xpos, double ypos)`. Fija la posición del cursor. 
 	- Polling de los botones del ratón: `int glfwGetMouseButton(GLFWwindow* window, int button)`. Pregunta estado (`GLFW_PRESS,GLFW_RELLEASE,...`) del botón `button`.
 
-#### Gestión del tiempo
+### Gestión del tiempo
 
 Dependiendo de la tarjeta gráfica, el número de fps por defecto puede variar. Las consecuencias de esto pueden ser notables. Por ejemplo: si tengo una función que mueve dos unidades un objeto a la derecha cuando se pulsa una tecla, si el programa se ejecuta a 60 fps el objeto se moverá 120 unidades, pero si el programa se ejecuta a 24 fps solo se moverá 48.
 
@@ -91,9 +89,9 @@ Para solucionar esto, especificamos los movimientos en unidades por segundo. La 
 	float velocidad = 120; 							   
 	// En el Bucle de renderizado
 	float newTime = static_cast<float>(glfwGetTime()); // Instante de tiempo actual
-	float deltaTime = newTime - lastTime;			   // Calcula el tiempo desde el último frame
-	float d = velocidad * deltaTime;				   // Calcula distancia del movimiento
-	float lasTime = newTime;						   // Actuliza el tiempo del último frame
+	float deltaTime = newTime - lastTime; // Calcula el tiempo desde el último frame
+	float d = velocidad * deltaTime; // Calcula distancia del movimiento
+	float lasTime = newTime; // Actuliza el tiempo del último frame
 
 ## OpenGL
 
@@ -116,11 +114,10 @@ Para activar/desactivar estados del cauce: `glEnable/glDisable`
 
 Para definir la geometría de los objetos vamos a utilizar buffers (un array), concretamente el Vertex Buffer Objects (VBO). Las funciones para manejar VBO:
 
-	void glGenBuffers(GLsizei n, Gluint* buffers)				// Reserva memoria en la tarjeta gráfica
+	void glGenBuffers(GLsizei n, Gluint* buffers) // Reserva memoria en la tarjeta gráfica
 	void glDeleteBuffers(GLsizei n, const Gluint* buffers)		// Libera memoria en la tarjeta gráfica
-	void glBindBuffer(GLenum target, Gluint buffer)				// Enlaza un buffer previamente generado con su tipo
+	void glBindBuffer(GLenum target, Gluint buffer)	// Enlaza un buffer previamente generado con su tipo
 - `target`. Tipos de buffer:
 	- `GL_ARRAY_BUFFER`. Contiene información de vértices (coordenaas, color, normales,...)
 	- `GL_ELEMENT_ARRAY_BUFFER`. Índices de los vértices con los que se forma la geometría de los objetos.
 
-	
