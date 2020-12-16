@@ -17,9 +17,27 @@
     <ClCompile Include="main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="render.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="shaderManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eventManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="shaderManager.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

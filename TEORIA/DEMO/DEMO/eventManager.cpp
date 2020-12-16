@@ -1,7 +1,7 @@
 #include "eventManager.h"
 
 
-bool keybEvent[512];
+char keybEvent[512];
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	
