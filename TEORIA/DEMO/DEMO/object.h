@@ -16,3 +16,4 @@ typedef struct obj_t
 }obj_t;
 
 obj_t* createTriangle();
+void moveTriangle(obj_t* obj);

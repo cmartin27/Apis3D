@@ -1,2 +1,14 @@
-﻿  render.cpp
+﻿  object.cpp
+D:\Apis3D\TEORIA\DEMO\DEMO\object.cpp(79,22): warning C4305: '-=': truncamiento de 'double' a 'T'
+          with
+          [
+              T=float
+          ]
+D:\Apis3D\TEORIA\DEMO\DEMO\object.cpp(84,22): warning C4305: '+=': truncamiento de 'double' a 'T'
+          with
+          [
+              T=float
+          ]
+  render.cpp
+  Generando código...
   DEMO.vcxproj -> D:\Apis3D\TEORIA\DEMO\x64\Debug\DEMO.exe

@@ -1,16 +1,17 @@
 #include "shaderManager.h"
 
 // Código del shader de vertices
+// Se ejecuta una vez por cada vértice
 const char* vertexShader = "\n\
 #version 330 \n\
-\n\
+uniform mat4 MVP; \n\
 in vec4 vertex;\n\
 out vec4 vertexColor; \n\
 \n\
 void main()\n\
 {\n\
 \n\
-gl_Position=vertex;\n\
+gl_Position=MVP*vertex;\n\
 vertexColor=vec4(1.0f,0.0f,0.0f,1.0f);\n\
 }\n\
 ";

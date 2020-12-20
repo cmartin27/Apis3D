@@ -82,7 +82,8 @@ void drawObj(obj_t* obj, int shader)
 	// Busca los buffers del objeto
 	boIDs_t boIds;
 	boIds = vboList[obj->objId];
-	int idVertices = 0; // get variable from shader
+	int idVertices;
+	int uniformMVP;
 
 
 	// Activa los buffers
@@ -96,9 +97,44 @@ void drawObj(obj_t* obj, int shader)
 	// GL_FLOAT: Tipo de vértices
 
 	glUseProgram(shader);
+	// EXTRAE VARIABLES DEL SHADER
+	// Obtiene id del vertice
+	idVertices = glGetAttribLocation(shader, "vertex"); // get variable from shader
+	// Obtiene id de la matriz MVP
+	// Parametros: nombre del shader, nombre de la variable en el shader
+	 uniformMVP = glGetUniformLocation(shader,"MVP");
 	// Habilia los arrays de atributos
 	glEnableVertexAttribArray(idVertices);
 	glVertexAttribPointer(idVertices, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+	// CALCULA MATRIZ MODELO
+
+	// Aplica translación. Argumentos: matriz identidad, vector de translacion
+	glm::mat4 Model = glm::translate(glm::mat4(1.0f),obj->pos);
+
+	// Aplica rotación con respecto a eje y. Argumentos: matriz de tranlación, 
+	// angulo de rotación, vector director del eje de rotación (normalizado)
+	Model = glm::rotate(Model, obj->rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
+
+	// Aplica escalado
+	Model = glm::scale(Model, obj->scal);
+
+	// CALCULA MATRIZ VISTA
+	glm::mat4 View = glm::mat4(1.0f);
+
+	// CALCULA MATRIZ PROYECCION
+	// Argumentos: angulo de apertura (en radianes), relacion de aspectos (resolucion), 
+	// plano near, plano far
+	glm::mat4 Proj = glm::perspective(glm::radians(45.0f),4.0f/3.0f,0.1f,100.0f);
+
+	// TERMINA DE CALCULAR LA MATRIZ MVP
+	glm::mat4 MVP = glm::mat4(1.0f);
+	MVP = Proj * View * Model;
+
+	// Inicializa la matriz MVP
+	glUniformMatrix4fv(uniformMVP, 1, GL_FALSE, &MVP[0][0]);
+
+
 	// Asigna color
 	//glColor3f(1.0f,1.0f,1.0f);
 	// Dibuja el objeto sin shader

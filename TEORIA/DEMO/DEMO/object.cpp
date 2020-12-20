@@ -1,4 +1,5 @@
 #include "object.h"
+#include "eventManager.h"
 
 obj_t* createTriangle()
 {
@@ -48,12 +49,38 @@ obj_t* createTriangle()
 	// Almacena desplazamiento desde el origen del objeto
 	//newObj->pos = desplazamiento;
 	newObj->pos[0] = newObj->pos[1] = 0.0f;
+	newObj->pos[2] = -5.0f;
 	newObj->rot[0] = newObj->rot[1] = newObj->rot[2] = 0.0f;
 	newObj->scal[0] = newObj->scal[1] = newObj->scal[2] = 1.0f;
 
-	newObj->pos[2] = -1.0f;
+
 	//memcpy(newObj->pos, desplazamiento, sizeof(int) * 4);
 
 	// Devuelve el objeto
 	return newObj;
+}
+
+void moveTriangle(obj_t* obj)
+{
+	float distancia = 0.0001f;
+	// Translacción derecha e izquierda
+	if (keybEvent[GLFW_KEY_A])
+	{
+		obj->pos.x -= distancia;
+	}
+	if (keybEvent[GLFW_KEY_D])
+	{
+		obj->pos.x += distancia;
+	}
+
+	if (keybEvent[GLFW_KEY_F])
+	{
+		//printf("Rotacion antes: %f\n", obj->rot.y);
+		obj->rot.y -= 0.001;
+		//printf("Rotacion despues: %f\n", obj->rot.y);
+	}
+	if (keybEvent[GLFW_KEY_H])
+	{
+		obj->rot.y += 0.001;
+	}
 }

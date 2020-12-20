@@ -112,7 +112,7 @@ int main(int argc, char** argv)
 	while (!glfwWindowShouldClose(window))
 	{
 		// Update de objetos
-		//moveTriangle();
+		moveTriangle(triangle);
 
 		// Limpia buffer de color
 		glClear(GL_COLOR_BUFFER_BIT);
