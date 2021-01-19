@@ -1,0 +1,11 @@
+#version 330 
+uniform mat4 MVP;
+in vec4 vertex;
+out vec4 vertexColor;
+
+void main()
+{
+
+gl_Position=MVP*vertex;
+vertexColor=vec4(1.0f,0.0f,0.0f,1.0f);
+}
