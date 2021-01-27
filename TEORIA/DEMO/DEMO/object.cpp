@@ -28,22 +28,26 @@ obj_t* createTriangle()
 	// Asigna el id de manera única
 	newObj->objId = idGenerator;
 	idGenerator++;
+
+	// Creamos la malla del objeto
+	newObj->mesh = new mesh_t;
+
 	// Asigna color
 	memcpy(newObj->color, color, sizeof(float) * 3);
 
 	// Asignalos datos de los índices
-	newObj->vertexIdx = new std::vector<unsigned int>();
-	newObj->vertexIdx->push_back(0);
-	newObj->vertexIdx->push_back(2);
-	newObj->vertexIdx->push_back(1);
+	newObj->mesh->vertexIdx = new std::vector<unsigned int>();
+	newObj->mesh->vertexIdx->push_back(0);
+	newObj->mesh->vertexIdx->push_back(2);
+	newObj->mesh->vertexIdx->push_back(1);
 	//memcpy(newObj->vertexIdx, idxList, sizeof(int) * 3);
 
 	// Asigna los datos de vértices
-	newObj->numVertex = 3;
-	newObj->vertexList = new std::vector<glm::vec4>();
-	newObj->vertexList->push_back(glm::vec4(0.0f, 0.5f, 0.0f, 1.0f));
-	newObj->vertexList->push_back(glm::vec4(-0.5f, 0.0f, 0.0f, 1.0f));
-	newObj->vertexList->push_back(glm::vec4(0.5f, 0.0f, 0.0f, 1.0f));
+	newObj->mesh->numVertex = 3;
+	newObj->mesh->vertexList = new std::vector<vertex_t>();
+	newObj->mesh->vertexList->push_back(vertex_t{ glm::vec4(0.0f, 0.5f, 0.0f, 1.0f), glm::vec2(0.5f,1.0f) });
+	newObj->mesh->vertexList->push_back(vertex_t{ glm::vec4(-0.5f, 0.0f, 0.0f, 1.0f), glm::vec2(0.0f,0.0f) });
+	newObj->mesh->vertexList->push_back(vertex_t{ glm::vec4(0.5f, 0.0f, 0.0f, 1.0f), glm::vec2(1.0,0.0f) });
 	//memcpy(newObj->vertexList, triangle, sizeof(float) * 3 * 4);
 
 	// Almacena desplazamiento desde el origen del objeto
@@ -55,6 +59,10 @@ obj_t* createTriangle()
 
 
 	//memcpy(newObj->pos, desplazamiento, sizeof(int) * 4);
+
+	// CREAMOS EL MATERIAL
+	newObj->mat = new material_t;
+	newObj->mat->text = createTexture("DATA/top.png");
 
 	// Devuelve el objeto
 	return newObj;
@@ -83,4 +91,9 @@ void moveTriangle(obj_t* obj)
 	{
 		obj->rot.y += 0.001;
 	}
+}
+
+void setShaderID(obj_t* obj, unsigned int shaderId)
+{
+	obj->mat->shaderID = shaderId;
 }

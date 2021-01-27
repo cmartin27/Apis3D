@@ -26,6 +26,12 @@
     <ClCompile Include="shaderManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eventManager.h">
@@ -38,6 +44,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="shaderManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

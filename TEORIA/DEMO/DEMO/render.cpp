@@ -20,14 +20,14 @@ void uploadObj(obj_t* obj)
 	// Crea un buffer de vértices
 	glBindBuffer(GL_ARRAY_BUFFER, boIds.vbo);		// Activa operaciones sobre el buffer
 	// Pasa vértices a GPU
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * 4, obj->vertexList->data(), GL_STATIC_DRAW); // size: num_vertices * coord_vertices
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_t) * obj->mesh->vertexList->size(), obj->mesh->vertexList->data(), GL_STATIC_DRAW); // size: num_vertices * coord_vertices
 	
 
 	// Crea un buffer de índices
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, boIds.idxbo);	// Activa operaciones sobre el buffer
 	// Pasa índices a GPU
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int)*1*3, obj->vertexIdx->data(), GL_STATIC_DRAW); // size: num_triangulos*vertices_triangulos
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int)*obj->mesh->vertexIdx->size(), obj->mesh->vertexIdx->data(), GL_STATIC_DRAW); // size: num_triangulos*vertices_triangulos
 
 	
 	vboList[obj->objId] = boIds;
@@ -77,13 +77,13 @@ void drawObj(obj_t* obj)
 }*/
 
 // Dibuja objeto con shaders
-void drawObj(obj_t* obj, int shader)
+void drawObj(obj_t* obj, int shader, camera_t* cam)
 {
 	// Busca los buffers del objeto
 	boIDs_t boIds;
 	boIds = vboList[obj->objId];
-	int idVertices;
-	int uniformMVP;
+	int idVertices, idTextCoords;
+	int uniformMVP, uniformTexSampler;
 
 
 	// Activa los buffers
@@ -99,14 +99,22 @@ void drawObj(obj_t* obj, int shader)
 	glUseProgram(shader);
 	// EXTRAE VARIABLES DEL SHADER
 	// Obtiene id del vertice
-	idVertices = glGetAttribLocation(shader, "vertex"); // get variable from shader
+	idVertices = glGetAttribLocation(shader, "vpos"); // get variable from shader
+	idTextCoords = glGetAttribLocation(shader, "vtex"); // get variable from shader
 	// Obtiene id de la matriz MVP
 	// Parametros: nombre del shader, nombre de la variable en el shader
 	 uniformMVP = glGetUniformLocation(shader,"MVP");
+	 uniformTexSampler = glGetUniformLocation(shader, "texSampler");
 	// Habilia los arrays de atributos
 	glEnableVertexAttribArray(idVertices);
-	glVertexAttribPointer(idVertices, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
-
+	glVertexAttribPointer(idVertices, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_t), nullptr);
+	glEnableVertexAttribArray(idTextCoords);
+	// La estrucura vertex_t tiene dos atributos: 
+	// - pos // vector de 4
+	// - text // vector de 2
+	// Con (void*)sizeof(glm::vec4) indicamos que las coordenadas de textura
+	// están a partir dél atributo pos
+	glVertexAttribPointer(idTextCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)sizeof(glm::vec4));
 	// CALCULA MATRIZ MODELO
 
 	// Aplica translación. Argumentos: matriz identidad, vector de translacion
@@ -120,7 +128,7 @@ void drawObj(obj_t* obj, int shader)
 	Model = glm::scale(Model, obj->scal);
 
 	// CALCULA MATRIZ VISTA
-	glm::mat4 View = glm::mat4(1.0f);
+	glm::mat4 View = computeViewMatrix(cam);
 
 	// CALCULA MATRIZ PROYECCION
 	// Argumentos: angulo de apertura (en radianes), relacion de aspectos (resolucion), 

@@ -4,7 +4,7 @@
 #include "render.h"
 #include "shaderManager.h"
 #include "eventManager.h"
-
+#include "camera.h"
 
 /*
 float triangle[3][4] = { {0.0f, 0.5f, 0.0f,1.0f}, {-0.5f,0.0f,0.0f,1.0f}, {0.5f,0.0f,0.0f,1.0f} };
@@ -99,6 +99,10 @@ int main(int argc, char** argv)
 
 
 	// INICIALIZA OBJETO
+
+	camera_t* cam = createCamera(glm::vec3(0.0f,0.0f,1.0f), 
+								 glm::vec3(0.0f,0.0f,0.0f),
+							     glm::vec3(0.0f,1.0f,0.0f));
 	// Crea estrctura del objeto en CPU
 	obj_t* triangle = createTriangle();
 	// Carga objeto en GPU
@@ -106,11 +110,14 @@ int main(int argc, char** argv)
 
 	// Crea shader
 	int shaderId = compileAndLinkShader(vertexShader, fragmentShader);
-
+	setShaderID(triangle, shaderId);
 
 	// Bucle de renderizado
 	while (!glfwWindowShouldClose(window))
 	{
+		// Update de camara
+		moveCamera(cam);
+
 		// Update de objetos
 		moveTriangle(triangle);
 
@@ -118,7 +125,7 @@ int main(int argc, char** argv)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Dibuja objeto
-		drawObj(triangle,shaderId);
+		drawObj(triangle,shaderId,cam);
 
 		glfwSwapBuffers(window); // Muestra por pantalla lo que hemos dibujado
 		glfwPollEvents();		 // Escucha el resto de eventos que ocurranxc

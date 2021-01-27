@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include "camera.h"
 #include <map>
 #define GLEW_STATIC
 #include<GL/glew.h>
@@ -16,4 +17,4 @@ typedef struct boIDs_t
 
 void uploadObj(obj_t* obj);
 void deleteObj(obj_t* obj);
-void drawObj(obj_t* obj,int shader);
+void drawObj(obj_t* obj,int shader, camera_t* cam);

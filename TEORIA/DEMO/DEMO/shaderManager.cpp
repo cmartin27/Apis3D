@@ -4,15 +4,18 @@
 // Se ejecuta una vez por cada vértice
 const char* vertexShader = "\n\
 #version 330 \n\
-uniform mat4 MVP; \n\
-in vec4 vertex;\n\
-out vec4 vertexColor; \n\
+uniform mat4 MVP;\n\
+in vec4 vpos;\n\
+in vec2 vtex;\n\
+out vec4 vertexColor;\n\
+out vec2 ftex; \n\
 \n\
 void main()\n\
 {\n\
 \n\
-gl_Position=MVP*vertex;\n\
+gl_Position=MVP*vpos;\n\
 vertexColor=vec4(1.0f,0.0f,0.0f,1.0f);\n\
+ftex=vtex;\n\
 }\n\
 ";
 
@@ -21,13 +24,16 @@ vertexColor=vec4(1.0f,0.0f,0.0f,1.0f);\n\
 const char* fragmentShader = "\n\
 #version 330 \n\
  \n\
+uniform sampler2D texSampler;\n\
+in vec2 ftext;\n\
 in vec4 vertexColor; \n\
 out vec4 fragColor;\n\
 \n\
 void main()\n\
 {\n\
 \n\
-fragColor=vec4(1.0f,0.0f,0.0f,1.0f);\n\
+fragColor=vertexColor;\n\
+/*fragColor=texture2D(texSampler,ftex);*/\n\
 }\n\
 ";
 
